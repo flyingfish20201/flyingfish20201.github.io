@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>会飞的鱼的Blog</title>
   
-  
+  <subtitle>学习中</subtitle>
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
@@ -10,7 +10,7 @@
   <id>http://example.com/</id>
   
   <author>
-    <name>武英强</name>
+    <name>flyingfish</name>
     
   </author>
   
