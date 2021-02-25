@@ -436,6 +436,10 @@
                                 <span class="chip bg-color">技术</span>
                             </a>
                         
+                            <a href="/tags/%E6%95%99%E7%A8%8B/">
+                                <span class="chip bg-color">教程</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -457,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    427
+                    431
                 </div>
                 
 
@@ -495,7 +499,7 @@
 <li>配置SSH</li>
 </ol>
 <p>第一次使用在git bash里面输入以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your Email address&quot;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">ssh-keygen -t rsa -C &quot;your Email address&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>敲击三次回车</p>
 <p>在C:\Users\user name\.ssh 下面找到id_rsa.pub文件，记事本复制里面的内容</p>
@@ -506,20 +510,23 @@
 <p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210105114506315.png" alt="image-20210105114506315"></p>
 <p>到这一步SSH key就已经设置好了。</p>
 <p>我们可以用以下命令测试连接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">ssh -T git@github.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>输入yes，如果看到 You’ve successfully authenticated, but GitHub does not provide shell access. 说明配置无误。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;xxxx&quot;&#x2F;&#x2F; user name</span><br><span class="line">git config --global user.email &quot;xxx@emil.com&quot; &#x2F;&#x2F;email address</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">git config --global user.name &quot;xxxx&quot;&#x2F;&#x2F; user name
+git config --global user.email &quot;xxx@emil.com&quot; &#x2F;&#x2F;email address<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ol start="3">
 <li>安装hexo</li>
 </ol>
 <p>准备一个新文件夹用来存放hexo文件</p>
 <p>git bash下输入命令(路径无所谓)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org &#x2F;&#x2F;npm换淘宝源</span><br><span class="line">npm install -g hexo &#x2F;&#x2F;全局安装hexo，遇到warning不用管</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org &#x2F;&#x2F;npm换淘宝源
+npm install -g hexo &#x2F;&#x2F;全局安装hexo，遇到warning不用管<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>现在路径切换到刚才准备的文件夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#39;directory&#39; &#x2F;&#x2F;切换到directory目录下</span><br><span class="line">hexo init &#x2F;&#x2F;初始化</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">cd &#39;directory&#39; &#x2F;&#x2F;切换到directory目录下
+hexo init &#x2F;&#x2F;初始化<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>到这里，本地的hexo就搭建好了，后续配置的修改可以自己去官网查看</p>
 <p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p>
@@ -529,7 +536,9 @@
 <p>在存放hexo代码的文件夹里面找到_config.yml文件，打开，翻到最下面。</p>
 <p><img src="https://flyingfish-picture.oss-cn-beijing.aliyuncs.com/imgimage-20210105122049410.png" alt="image-20210105122049410"></p>
 <p>git bash</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">hexo g &#x2F;&#x2F;构造</span><br><span class="line">hexo d &#x2F;&#x2F;上传</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">npm install hexo-deployer-git --save
+hexo g &#x2F;&#x2F;构造
+hexo d &#x2F;&#x2F;上传<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>GitHub Pages需要加载时间，上传之后可能不会立刻解析，等待一段时间后，即可看到博客。</p>
 
@@ -598,6 +607,10 @@
                             
                                 <a href="/tags/%E6%8A%80%E6%9C%AF/">
                                     <span class="chip bg-color">技术</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%95%99%E7%A8%8B/">
+                                    <span class="chip bg-color">教程</span>
                                 </a>
                             
                         </div>
@@ -942,6 +955,10 @@
                         <span class="chip bg-color">技术</span>
                     </a>
                     
+                    <a href="/tags/%E6%95%99%E7%A8%8B/">
+                        <span class="chip bg-color">教程</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -957,9 +974,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="DMCTF WriteUp">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="DMCTF Write-up">
                         
-                        <span class="card-title">DMCTF WriteUp</span>
+                        <span class="card-title">DMCTF Write-up</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -987,8 +1004,8 @@
                         <span class="chip bg-color">CTF</span>
                     </a>
                     
-                    <a href="/tags/WriteUp/">
-                        <span class="chip bg-color">WriteUp</span>
+                    <a href="/tags/Write-up/">
+                        <span class="chip bg-color">Write-up</span>
                     </a>
                     
                 </div>
